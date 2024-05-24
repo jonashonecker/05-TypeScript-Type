@@ -1,24 +1,49 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+type GermanGrades = 1 | 2 | 3 | 4 | 5 | 6 | undefined;
+type AmericanGrades = "A" | "B" | "C" | "D" | "E" | "F" | undefined;
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+type Student = {
+    firstName: string;
+    lastName: string;
+    age: number;
+    grades: GermanGrades[] | AmericanGrades[];
+}
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+type ClassRoom = Student[];
+
+
+const newStudent1: Student = {
+    firstName: "Anton",
+    lastName: "Meier",
+    age: 17,
+    grades: [1, 4, 3, 1, 3, 2, 1, 2],
+}
+
+const newStudent2: Student = {
+    firstName: "Anton",
+    lastName: "Meier",
+    age: 17,
+    grades: ["A", 2, "F", 3, 1, "B", 2, 5],
+}
+
+const newStudent3: Student = {
+    firstName: "Anton",
+    lastName: "Meier",
+    age: 17,
+    grades: ["A", 2, undefined, 3, 1, "B", undefined, 5],
+}
+
+const allStudents: ClassRoom = [newStudent1, newStudent2, newStudent3];
+
+function printStudent(s: Student): void {
+    const grades = s.grades.map((grade) => grade === undefined ? '*' : grade);
+    console.log(`${s.firstName} ${s.lastName} (${s.age})`)
+    console.log("=".repeat(30))
+    console.log(`Grades: ${grades}`)
+    console.log()
+}
+
+function printClassRoom(c: ClassRoom): void {
+    c.forEach((s) => {printStudent(s)})
+}
+
+printClassRoom(allStudents);
